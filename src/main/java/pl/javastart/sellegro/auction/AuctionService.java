@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 @Service
@@ -61,19 +62,28 @@ public class AuctionService {
     }
 
     public List<Auction> findAllForFilters(AuctionFilters auctionFilters) {
+
+        Predicate<Auction> filtrByTitle = auction -> auctionFilters.getTitle() == null || auction.getTitle().toUpperCase().contains(auctionFilters.getTitle().toUpperCase());
+        Predicate<Auction> filtrByCarMaker = auction -> auctionFilters.getCarMaker() == null || auction.getCarMake().toUpperCase().contains(auctionFilters.getCarMaker().toUpperCase());
+        Predicate<Auction> filtrByCarModel = auction -> auctionFilters.getCarModel() == null || auction.getCarModel().toUpperCase().contains(auctionFilters.getCarModel().toUpperCase());
+        Predicate<Auction> filtrByColor = auction -> auctionFilters.getColor() == null || auction.getColor().toUpperCase().contains(auctionFilters.getColor().toUpperCase());
+
         return auctions.stream()
-                .filter(auction -> auctionFilters.getTitle() == null || auction.getTitle().toUpperCase().contains(auctionFilters.getTitle().toUpperCase()))
+                .filter(filtrByTitle.and(filtrByCarMaker.and(filtrByCarModel.and(filtrByColor))))
                 .collect(Collectors.toList());
     }
 
     public List<Auction> findAllSorted(String sort) {
-        Comparator<Auction> comparator = Comparator.comparing(Auction::getTitle);
-        if(sort.equals("title")) {
+        Comparator<Auction> comparator;
+        if (sort.equals("title")) {
             comparator = Comparator.comparing(Auction::getTitle);
-        } else if(sort.equals("price")) {
+        } else if (sort.equals("price")) {
             comparator = Comparator.comparing(Auction::getPrice);
+        } else if (sort.equals("color")) {
+            comparator = Comparator.comparing(Auction::getColor);
+        } else {
+            comparator = Comparator.comparing(Auction::getEndDate);
         }
-
         return auctions.stream()
                 .sorted(comparator)
                 .collect(Collectors.toList());

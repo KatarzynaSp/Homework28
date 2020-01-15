@@ -19,4 +19,5 @@ public class HomeController {
         model.addAttribute("cars", auctionService.find4MostExpensive());
         return "home";
     }
+
 }
