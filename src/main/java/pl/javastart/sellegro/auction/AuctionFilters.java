@@ -3,7 +3,7 @@ package pl.javastart.sellegro.auction;
 public class AuctionFilters {
 
     private String title;
-    private String carMaker;
+    private String carMake;
     private String carModel;
     private String color;
 
@@ -15,12 +15,12 @@ public class AuctionFilters {
         this.title = title;
     }
 
-    public String getCarMaker() {
-        return carMaker;
+    public String getCarMake() {
+        return carMake;
     }
 
-    public void setCarMaker(String carMaker) {
-        this.carMaker = carMaker;
+    public void setCarMake(String carMake) {
+        this.carMake = carMake;
     }
 
     public String getCarModel() {

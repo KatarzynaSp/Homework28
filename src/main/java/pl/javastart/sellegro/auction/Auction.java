@@ -1,11 +1,17 @@
 package pl.javastart.sellegro.auction;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+@Entity
 public class Auction {
-
+    @Id
+    @GeneratedValue
     private Long id;
+
     private String title;
     private String carMake;
     private String carModel;
@@ -13,6 +19,18 @@ public class Auction {
     private BigDecimal price;
     private LocalDate endDate;
 
+    public Auction() {
+    }
+
+    public Auction(String title, String carMake, String carModel, String color, BigDecimal price, LocalDate endDate) {
+        this.id = id;
+        this.title = title;
+        this.carMake = carMake;
+        this.carModel = carModel;
+        this.color = color;
+        this.price = price;
+        this.endDate = endDate;
+    }
     public Auction(Long id, String title, String carMake, String carModel, String color, BigDecimal price, LocalDate endDate) {
         this.id = id;
         this.title = title;
